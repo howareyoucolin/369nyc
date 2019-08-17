@@ -9,7 +9,6 @@ import express from 'express';
 const app = express();
 
 app.get('/', function (req, res) {
-	console.log('Listening...');
 	fs.readFile(path.resolve('./src/template.html'), 'utf8', (err, data) => {
 		if (err) {
 			console.error(err)
@@ -23,4 +22,4 @@ app.get('/', function (req, res) {
 	});	
 })
 
-app.listen(80, () => console.log('369NYC is listening on port 80!'));
+app.listen(80, () => console.log('369NYC is listening on port 80 ...'));
