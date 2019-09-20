@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 
 import Header from './components/header';
 
-export default class App extends React.Component {
+export default class Home extends React.Component {
 	render() {
 		return (
-			<div className="App">
+			<div>
 				<Header />
-				<div>yy yyy a</div>
+				<div>This is home page!</div>
 			</div>
 		)
 	}

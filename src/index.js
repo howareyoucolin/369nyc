@@ -1,4 +1,4 @@
-import App from './app';
+import Home from './home';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToString } from "react-dom/server";
@@ -40,7 +40,7 @@ app.get('/', function (req, res) {
 	const css = new Set();
 	const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 	//Render HTML:
-	const body = renderToString(<StyleContext.Provider value={{ insertCss }}><App /></StyleContext.Provider>);
+	const body = renderToString(<StyleContext.Provider value={{ insertCss }}><Home /></StyleContext.Provider>);
 	const html = `<!doctype html>
 		<html>
 			<head>
