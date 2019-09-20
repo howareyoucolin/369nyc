@@ -13,15 +13,29 @@ const http = require('http');
 const https = require('https');
 const tls = require('tls');
 
+//http to https, nonwww to www redirections:
+app.use(function (req, res, next) {
+	if(req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.'){
+		next();
+	}else{
+		res.redirect('https://www.369nyc.com'+req.url);
+		return;
+	}
+})
+
 // Static folders and files: 
 app.use('/public', express.static(path.join(__dirname, '/var/369nyc/public')));
 app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-known')));
 
+// Temp page:
+app.get('/test', function(req, res){
+	console.log(req.headers.host+req.url);
+	//res.redirect('https://www.369nyc.com');return;
+	res.status(200).send('HELLO WORLD');
+})
+
 // Home page:
 app.get('/', function (req, res) {
-	console.log('=======================');
-	console.log(req.headers.host);
-	console.log('=======================');
 	//Init Isomorphic Styles:
 	const css = new Set();
 	const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
