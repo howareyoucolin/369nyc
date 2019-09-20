@@ -1,1 +1,17 @@
-.title{color:red;}
+.header{
+	background:#004074;
+	height:60px;
+	width:100%;
+	position:fixed;
+	top:0;
+	left:0;
+}
+.title{
+	color:#FFF;
+	line-height:60px;
+	font-size:18px;
+	font-weight:normal;
+	text-align:center;
+	margin:0;
+	padding:0;
+}

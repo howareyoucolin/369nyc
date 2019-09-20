@@ -6,8 +6,8 @@ import s from './header.css';
 class Header extends React.Component {
 	render() {
 		return (
-			<div className={s.title}>
-				<p>xxwxx xxx xxx</p>
+			<div className={s.header}>
+				<h1 className={s.title}>369纽约活动网</h1>
 			</div>
 		)
 	}
