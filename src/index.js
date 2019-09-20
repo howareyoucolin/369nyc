@@ -18,7 +18,7 @@ app.use(function (req, res, next) {
 	if(req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.'){
 		next();
 	}else{
-		res.redirect('https://www.369nyc.com'+req.url);
+		res.redirect(301, 'https://www.369nyc.com'+req.url);
 		return;
 	}
 })
