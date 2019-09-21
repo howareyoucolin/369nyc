@@ -40,7 +40,7 @@ app.get('/', function (req, res) {
 			<title>369纽约活动网</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<style>body{margin:85px 0 0;padding:0;font-family:Georgia,"Times New Roman","Microsoft YaHei New", "Microsoft Yahei","微软雅黑",宋体,SimSun,STXihei,"华文细黑",sans-serif;line-height:28px;font-size:16px;color:#474747;}${[...css].join('').replace(/\n|\t/g,'')}</style>
+			<style>body{margin:85px 0 0;padding:0;font-family:Georgia,"Times New Roman","Microsoft YaHei New", "Microsoft Yahei","微软雅黑",宋体,SimSun,STXihei,"华文细黑",sans-serif;line-height:28px;font-size:16px;color:#676767;}${[...css].join('').replace(/\n|\t/g,'')}</style>
 			</head>
 			<body>
 			<div id="root">${body}</div>
