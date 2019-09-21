@@ -7,7 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import express from 'express';
 
-import Home from './templates/Home/Home';
+import Home from 'src/templates/Home/Home';
 
 const app = express();
 const http = require('http');
