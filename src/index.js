@@ -1,4 +1,3 @@
-import Home from './home';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToString } from "react-dom/server";
@@ -7,6 +6,8 @@ import StyleContext from 'isomorphic-style-loader/StyleContext';
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
+
+import Home from './templates/Home/Home';
 
 const app = express();
 const http = require('http');

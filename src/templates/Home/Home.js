@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import cx from 'classnames';
-import gs from './components/global.css';
-import Header from './components/header';
+import gs from '../../global.css';
+import Header from '../../components/header/header';
+import Events from '../../components/events/events';
 
 class Home extends React.Component {
 
@@ -11,6 +12,9 @@ class Home extends React.Component {
 		return (
 			<div>
 				<Header />
+				<div className={gs.container}>
+					<Events />
+				</div>
 				<div className={cx(gs.container,gs.justify)}>
 				TT1024网络科技（网站建设，网站优化）凝聚了一批活跃在纽约地区的华人设计师，软件工程师和有活力的媒体人。他们在各自的阵地上有着出色的表现以及丰富的实战经验，更具魅力的是他们的网站创造力和奉献精神。我们的设计实力和团队配合绝对可以胜任任何有具有挑战性的设计工作！
 

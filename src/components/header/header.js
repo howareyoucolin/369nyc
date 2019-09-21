@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import gs from './global.css';
+import gs from '../../global.css';
 import s from './header.css';
 
 class Header extends React.Component {
