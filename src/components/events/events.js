@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/withStyles';
-import gs from '../../global.css';
+import gs from 'src/global.css';
 
 class Events extends React.Component {
 	render() {

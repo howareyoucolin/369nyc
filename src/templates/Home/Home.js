@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import cx from 'classnames';
-import gs from '../../global.css';
-import Header from '../../components/header/header';
-import Events from '../../components/events/events';
+import gs from 'src/global.css';
+import Header from 'src/components/header/header';
+import Events from 'src/components/events/events';
 
 class Home extends React.Component {
 

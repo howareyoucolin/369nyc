@@ -6,6 +6,11 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js'
   },
+  resolve: {
+	alias: {
+	  src: path.resolve('./src')
+	}
+  },
   module: {
     rules: [
       {
