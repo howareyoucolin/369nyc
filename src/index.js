@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToString } from "react-dom/server";
 import StyleContext from 'isomorphic-style-loader/StyleContext';
+import { createStore } from "redux";
+import rootReducer from "src/reducers/rootReducer";
+import { Provider } from "react-redux";
 
 import fs from 'fs';
 import path from 'path';
@@ -13,6 +16,9 @@ const app = express();
 const http = require('http');
 const https = require('https');
 const tls = require('tls');
+
+// Redux store:
+const store = createStore(rootReducer);
 
 //http to https, nonwww to www redirections:
 app.use(function (req, res, next) {
@@ -34,7 +40,11 @@ app.get('/', function (req, res) {
     const css = new Set();
     const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
     //Render HTML:
-    const body = renderToString(<StyleContext.Provider value={{ insertCss }}><Home /></StyleContext.Provider>);
+    const body = renderToString(
+            <Provider store={store}>
+            <StyleContext.Provider value={{ insertCss }}><Home /></StyleContext.Provider>
+            </Provider>
+        );
     const html = `<!doctype html>
 		<html>
 			<head>
