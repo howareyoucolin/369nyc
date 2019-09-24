@@ -32,6 +32,7 @@ app.use(function (req, res, next) {
 
 // Static folders and files: 
 app.use('/public', express.static(path.join(__dirname, '/var/369nyc/public')));
+app.use('/dist', express.static(path.join(__dirname, '/var/369nyc/dist')));
 app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-known')));
 
 // Home page:
@@ -55,6 +56,7 @@ app.get('/', function (req, res) {
 			</head>
 			<body>
 			<div id="root">${body}</div>
+            <script src="./dist/home.js"></script>
 			</body>
 		</html>`;
     res.status(200).send(html);

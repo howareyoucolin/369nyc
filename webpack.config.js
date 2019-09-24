@@ -1,10 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: {
+    'main.js':'./src/index.js',
+    'home.js':'./src/templates/Home/HomeClient.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'main.js'
+    filename: '[name]'
   },
   resolve: {
 	alias: {
