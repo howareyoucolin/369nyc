@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { renderToString } from "react-dom/server";
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import { createStore } from "redux";
-import rootReducer from "src/reducers/rootReducer";
+import fetchReducer from "src/reducers/fetchReducer";
 import { Provider } from "react-redux";
 
 import fs from 'fs';
@@ -18,7 +18,7 @@ const https = require('https');
 const tls = require('tls');
 
 // Redux store:
-const store = createStore(rootReducer);
+const store = createStore(fetchReducer);
 
 //http to https, nonwww to www redirections:
 app.use(function (req, res, next) {
@@ -40,6 +40,8 @@ app.get('/', function (req, res) {
     //Init Isomorphic Styles:
     const css = new Set();
     const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
+	//Fetch Data:
+	store.dispatch({type: 'FETCH_POSTS'});
     //Render HTML:
     const body = renderToString(
             <Provider store={store}>
