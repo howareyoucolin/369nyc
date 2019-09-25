@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToString } from "react-dom/server";
 import StyleContext from 'isomorphic-style-loader/StyleContext';
-import { createStore } from "redux";
-import fetchReducer from "src/reducers/fetchReducer";
+import { combineReducers, createStore } from 'redux';
+import postReducer from "src/store/postData/reducer";
 import { Provider } from "react-redux";
 
 import fs from 'fs';
@@ -16,9 +16,6 @@ const app = express();
 const http = require('http');
 const https = require('https');
 const tls = require('tls');
-
-// Redux store:
-const store = createStore(fetchReducer);
 
 //http to https, nonwww to www redirections:
 app.use(function (req, res, next) {
@@ -40,6 +37,11 @@ app.get('/', function (req, res) {
     //Init Isomorphic Styles:
     const css = new Set();
     const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
+    //Redux store:
+    const combinedReducer = combineReducers({
+        postData: postReducer
+    });
+    const store = createStore(combinedReducer);
 	//Fetch Data:
 	store.dispatch({type: 'FETCH_POSTS'});
     //Render HTML:

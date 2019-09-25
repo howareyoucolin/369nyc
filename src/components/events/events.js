@@ -22,12 +22,13 @@ class Events extends React.Component {
 	}
 	
 	render() {
+		const { posts } = this.props;
 		return (
 			<div>
 				<p>This is a list of Events.</p>
 				<p><button onClick={this.testAction}>Add Post</button></p>
 				<ul>
-					{this.props.posts.map((post,index) => <li key={index}>{post}</li>)}
+					{posts.map((post,index) => <li key={index}>{post}</li>)}
 				</ul>
 			</div>
 		)
@@ -35,7 +36,7 @@ class Events extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	return { posts: state.posts };
+	return { posts: state.postData.posts };
 };
 
 export default connect(mapStateToProps)(withStyles(gs)(Events));

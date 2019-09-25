@@ -2,13 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Home from 'src/templates/Home/Home';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
-import { createStore } from "redux";
-import fetchReducer from "src/reducers/fetchReducer";
+import { combineReducers, createStore } from 'redux';
+import postReducer from "src/store/postData/reducer";
 import { Provider } from "react-redux";
 
-// Redux store:
-const store = createStore(fetchReducer);
+//combined reducers:
+const combinedReducer = combineReducers({
+    postData: postReducer
+});
 
+//Redux store:
+const store = createStore(combinedReducer);
 //Fetch Data:
 store.dispatch({type: 'FETCH_POSTS'});
 
