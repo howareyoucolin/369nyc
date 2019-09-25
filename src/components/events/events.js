@@ -9,7 +9,7 @@ class Events extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		this.testAction = this.testAction.bind(this);
+		this.addPost = this.addPost.bind(this);
 	}
 	
 	//async _getData() {
@@ -17,8 +17,8 @@ class Events extends React.Component {
 	//	return results.data;
 	//}
 
-	testAction(){
-		alert('daskdfjkasfa');
+	addPost(){
+		this.props.addPost();
 	}
 	
 	render() {
@@ -26,7 +26,7 @@ class Events extends React.Component {
 		return (
 			<div>
 				<p>This is a list of Events.</p>
-				<p><button onClick={this.testAction}>Add Post</button></p>
+				<p><button onClick={this.addPost}>Add Post</button></p>
 				<ul>
 					{posts.map((post,index) => <li key={index}>{post}</li>)}
 				</ul>
@@ -35,8 +35,14 @@ class Events extends React.Component {
 	}
 }
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		addPost: () => dispatch({ type: 'ADD_POST' })
+	}
+}
+
 const mapStateToProps = (state) => {
 	return { posts: state.postData.posts };
 };
 
-export default connect(mapStateToProps)(withStyles(gs)(Events));
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(gs)(Events));

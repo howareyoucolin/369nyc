@@ -13,6 +13,12 @@ function postReducer(state = postInitialState, action) {
 			]
 		}
 	}
+	else if(action.type == 'ADD_POST'){
+		return {
+			...state,
+			posts: state.posts.concat('xxxx xxx xxx xxxx new item xxx xx')
+		}
+	}
 	return state;
 };
 
