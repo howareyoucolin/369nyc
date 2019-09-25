@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from 'src/templates/Home/Home';
+import Home from 'src/templates/home/home';
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import { combineReducers, createStore } from 'redux';
 import postReducer from "src/store/postData/reducer";

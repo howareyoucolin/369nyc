@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   entry: {
     'main.js':'./src/index.js',
-    'home.js':'./src/templates/Home/HomeClient.js'
+    'home.js':'./src/templates/home/homeClient.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
