@@ -44,6 +44,8 @@ app.get('/', function (req, res) {
     const store = createStore(combinedReducer);
 	//Fetch Data:
 	store.dispatch({type: 'FETCH_POSTS'});
+    //Pass Redux states to Frontend:
+    const reduxState = store.getState();
     //Render HTML:
     const body = renderToString(
             <Provider store={store}>
@@ -60,6 +62,7 @@ app.get('/', function (req, res) {
 			</head>
 			<body>
 			<div id="root">${body}</div>
+            <script>window.REDUX_DATA = ${ JSON.stringify( reduxState ) }</script>
             <script src="./dist/home.js"></script>
 			</body>
 		</html>`;

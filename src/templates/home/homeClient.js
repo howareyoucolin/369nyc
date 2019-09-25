@@ -6,15 +6,12 @@ import { combineReducers, createStore } from 'redux';
 import postReducer from "src/store/postData/reducer";
 import { Provider } from "react-redux";
 
+//Init store from window's data that is passed from SSR:
 //combined reducers:
 const combinedReducer = combineReducers({
     postData: postReducer
 });
-
-//Redux store:
-const store = createStore(combinedReducer);
-//Fetch Data:
-store.dispatch({type: 'FETCH_POSTS'});
+const store = createStore(combinedReducer,window.REDUX_DATA);
 
 //Init Isomorphic Styles:
 const css = new Set();
