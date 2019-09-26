@@ -4,6 +4,7 @@ import { renderToString } from "react-dom/server";
 import StyleContext from 'isomorphic-style-loader/StyleContext';
 import { combineReducers, createStore } from 'redux';
 import postReducer from "src/store/postData/reducer";
+import { fetchPosts } from "src/store/postData/actions";
 import { Provider } from "react-redux";
 
 import fs from 'fs';
@@ -43,7 +44,7 @@ app.get('/', function (req, res) {
     });
     const store = createStore(combinedReducer);
 	//Fetch Data:
-	store.dispatch({type: 'FETCH_POSTS'});
+	store.dispatch(fetchPosts());
     //Pass Redux states to Frontend:
     const reduxState = store.getState();
     //Render HTML:
