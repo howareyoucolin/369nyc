@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToString } from "react-dom/server";
-import StyleContext from 'isomorphic-style-loader/StyleContext';
+import { CombinedProvider, css } from 'src/includes/combinedProvider';
 import HomeStore from 'src/templates/home/homeStore';
 import { fetchPosts } from "src/store/postData/actions";
-import { Provider } from "react-redux";
 
 import fs from 'fs';
 import path from 'path';
@@ -34,17 +33,14 @@ app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-kn
 
 // Home page:
 app.get('/', function (req, res) {
-    //Init Isomorphic Styles:
-    const css = new Set();
-    const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
 	//Fetch Data:
     fetchPosts().then(postAction => {
     	HomeStore.dispatch(postAction);
         //Render HTML:
         const body = renderToString(
-                <Provider store={HomeStore}>
-                <StyleContext.Provider value={{ insertCss }}><Home /></StyleContext.Provider>
-                </Provider>
+                <CombinedProvider store={HomeStore}>
+                    <Home />
+                </CombinedProvider>
             );
         const html = `<!doctype html>
     		<html>
@@ -52,7 +48,10 @@ app.get('/', function (req, res) {
     			<title>369纽约活动网</title>
     			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     			<meta name="viewport" content="width=device-width, initial-scale=1">
-    			<style>body{margin:85px 0 0;padding:0;font-family:Georgia,"Times New Roman","Microsoft YaHei New", "Microsoft Yahei","微软雅黑",宋体,SimSun,STXihei,"华文细黑",sans-serif;line-height:28px;font-size:16px;color:#676767;}${[...css].join('').replace(/\n|\t/g,'')}</style>
+    			<style>
+                    body{margin:85px 0 0;padding:0;font-family:Georgia,"Times New Roman","Microsoft YaHei New", "Microsoft Yahei","微软雅黑",宋体,SimSun,STXihei,"华文细黑",sans-serif;line-height:28px;font-size:16px;color:#676767;}
+                    ${[...css].join('').replace(/\n|\t/g,'')}
+                </style>
     			</head>
     			<body>
     			<div id="root">${body}</div>
