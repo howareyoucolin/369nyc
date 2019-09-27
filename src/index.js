@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToString } from "react-dom/server";
 import StyleContext from 'isomorphic-style-loader/StyleContext';
-import { combineReducers, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import postReducer from "src/store/postData/reducer";
+import HomeStore from 'src/templates/home/homeStore';
 import { fetchPosts } from "src/store/postData/actions";
 import { Provider } from "react-redux";
 
@@ -39,19 +37,12 @@ app.get('/', function (req, res) {
     //Init Isomorphic Styles:
     const css = new Set();
     const insertCss = (...styles) => styles.forEach(style => css.add(style._getCss()));
-    //Redux store:
-    const combinedReducer = combineReducers({
-        postData: postReducer
-    });
-    const store = createStore(combinedReducer, applyMiddleware(thunk));
 	//Fetch Data:
     fetchPosts().then(postAction => {
-    	store.dispatch(postAction);
-        //Pass Redux states to Frontend:
-        const reduxState = store.getState();
+    	HomeStore.dispatch(postAction);
         //Render HTML:
         const body = renderToString(
-                <Provider store={store}>
+                <Provider store={HomeStore}>
                 <StyleContext.Provider value={{ insertCss }}><Home /></StyleContext.Provider>
                 </Provider>
             );
@@ -65,7 +56,7 @@ app.get('/', function (req, res) {
     			</head>
     			<body>
     			<div id="root">${body}</div>
-                <script>window.REDUX_DATA = ${ JSON.stringify( reduxState ) }</script>
+                <script>window.REDUX_DATA = ${ JSON.stringify( HomeStore.getState() ) }</script>
                 <script src="./dist/home.js"></script>
     			</body>
     		</html>`;
