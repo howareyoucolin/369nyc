@@ -1,36 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { renderToString } from "react-dom/server";
-import { CombinedProvider, css } from 'src/includes/combinedProvider';
-import { commonCss } from 'src/includes/commonCss';
-import HomeStore from 'src/templates/home/homeStore';
-import { fetchPosts } from "src/store/postData/actions";
-
+import http from 'http';
+import https from 'https';
+import tls from 'tls';
 import fs from 'fs';
 import path from 'path';
 import express from 'express';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { renderToString } from "react-dom/server";
+
+import { CombinedProvider, css } from 'src/includes/combinedProvider';
+import { commonCss } from 'src/includes/commonCss';
+
+import { fetchPosts } from "src/store/postData/actions";
+import HomeStore from 'src/templates/home/homeStore';
 import Home from 'src/templates/home/home';
 
 const app = express();
-const http = require('http');
-const https = require('https');
-const tls = require('tls');
 
-//http to https, nonwww to www redirections:
-app.use(function (req, res, next) {
-    if (req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.') {
-        next();
-    } else {
-        res.redirect(301, 'https://www.369nyc.com' + req.url);
-        return;
-    }
-})
-
-// Static folders and files: 
-app.use('/public', express.static(path.join(__dirname, '/var/369nyc/public')));
-app.use('/dist', express.static(path.join(__dirname, '/var/369nyc/dist')));
-app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-known')));
+/*** Application layer configurations ***/
 
 // Home page:
 app.get('/', function (req, res) {
@@ -53,7 +41,7 @@ app.get('/', function (req, res) {
     			</head>
     			<body>
     			<div id="root">${body}</div>
-                <script>window.REDUX_DATA = ${ JSON.stringify( HomeStore.getState() ) }</script>
+                <script>window.REDUX_DATA = ${JSON.stringify(HomeStore.getState())}</script>
                 <script src="./dist/home.js"></script>
     			</body>
     		</html>`;
@@ -61,34 +49,51 @@ app.get('/', function (req, res) {
     });
 })
 
+/*** Server layer configurations ***/
+
+// Static folders and files: 
+app.use('/public', express.static(path.join(__dirname, '/var/369nyc/public')));
+app.use('/dist', express.static(path.join(__dirname, '/var/369nyc/dist')));
+app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-known')));
+
+//http to https, nonwww to www redirections:
+app.use(function (req, res, next) {
+    if (req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.') {
+        next();
+    } else {
+        res.redirect(301, 'https://www.369nyc.com' + req.url);
+        return;
+    }
+})
+
 // Certificate with www:
-const privateKey = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/privkey.pem', 'utf8');
-const certificate = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/cert.pem', 'utf8');
-const ca = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/chain.pem', 'utf8');
+const privateKey_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/privkey.pem', 'utf8');
+const certificate_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/cert.pem', 'utf8');
+const ca_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/chain.pem', 'utf8');
+
 // Certificate without www:
-const privateKey2 = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/privkey.pem', 'utf8');
-const certificate2 = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/cert.pem', 'utf8');
-const ca2 = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/chain.pem', 'utf8');
+const privateKey_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/privkey.pem', 'utf8');
+const certificate_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/cert.pem', 'utf8');
+const ca_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/chain.pem', 'utf8');
 
 // Conditionally load certifate:
 const credentials = {
     SNICallback: function (domain, cb) {
         if (domain === 'www.369nyc.com') {
             return cb(null, tls.createSecureContext({
-                key: privateKey,
-                cert: certificate,
-                ca: ca
+                key: privateKey_www,
+                cert: certificate_www,
+                ca: ca_www
             }));
         }
         else if (domain === '369nyc.com') {
             return cb(null, tls.createSecureContext({
-                key: privateKey2,
-                cert: certificate2,
-                ca: ca2
+                key: privateKey_nonwww,
+                cert: certificate_nonwww,
+                ca: ca_nonwww
             }));
         }
     },
-
 };
 
 // Starting both http & https servers
