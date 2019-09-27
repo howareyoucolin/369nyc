@@ -22,10 +22,10 @@ class Events extends React.Component {
 	}
 	
 	render() {
-		const { posts } = this.props;
+		const { posts, counter } = this.props;
 		return (
 			<div>
-				<p>This is a list of Events.</p>
+				<p>This is a list of {counter} Events.</p>
 				<p><button onClick={this.addPost}>Add Post</button></p>
 				<ul>
 					{posts.map((post,index) => <li key={index}>{post}</li>)}
@@ -42,7 +42,10 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 const mapStateToProps = (state) => {
-	return { posts: state.postData.posts };
+	return { 
+		posts: state.postData.posts,
+		counter: state.postData.counter
+	};
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(gs)(Events));

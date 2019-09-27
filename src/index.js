@@ -12,7 +12,7 @@ import { renderToString } from "react-dom/server";
 import { CombinedProvider, css } from 'src/includes/combinedProvider';
 import { commonCss } from 'src/includes/commonCss';
 
-import { fetchPosts } from "src/store/postData/actions";
+import { fetchPosts, fetchTen } from "src/store/postData/actions";
 import HomeStore from 'src/templates/home/homeStore';
 import Home from 'src/templates/home/home';
 
@@ -23,8 +23,9 @@ const app = express();
 // Home page:
 app.get('/', function (req, res) {
 	//Fetch Data:
-    fetchPosts().then(postAction => {
-    	HomeStore.dispatch(postAction);
+    Promise.all([fetchPosts(), fetchTen()]).then(values => {
+    	HomeStore.dispatch(values[0]);
+        HomeStore.dispatch(values[1]);
         //Render HTML:
         const body = renderToString(
                 <CombinedProvider store={HomeStore}>

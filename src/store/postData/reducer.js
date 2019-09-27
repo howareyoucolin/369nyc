@@ -1,7 +1,8 @@
 import { FETCH_POSTS } from '../actionType';
 
 const postInitialState = {
-	posts: []
+	posts: [],
+	counter: 0
 };
 
 function postReducer(state = postInitialState, action) {
@@ -13,6 +14,12 @@ function postReducer(state = postInitialState, action) {
 				'dasd sfdsafds a affd dfvd saf aes 222',
 				'dasdfd sq ewnf gfds a re saf ereres 3333',
 			]
+		}
+	}
+	else if(action.type == 'FETCH_TEN'){
+		return {
+			...state,
+			counter: 10
 		}
 	}
 	else if(action.type == 'ADD_POST'){
