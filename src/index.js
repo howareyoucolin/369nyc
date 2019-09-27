@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { renderToString } from "react-dom/server";
 import StyleContext from 'isomorphic-style-loader/StyleContext';
-import { combineReducers, createStore } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 import postReducer from "src/store/postData/reducer";
 import { fetchPosts } from "src/store/postData/actions";
 import { Provider } from "react-redux";
@@ -42,32 +43,34 @@ app.get('/', function (req, res) {
     const combinedReducer = combineReducers({
         postData: postReducer
     });
-    const store = createStore(combinedReducer);
+    const store = createStore(combinedReducer, applyMiddleware(thunk));
 	//Fetch Data:
-	store.dispatch(fetchPosts());
-    //Pass Redux states to Frontend:
-    const reduxState = store.getState();
-    //Render HTML:
-    const body = renderToString(
-            <Provider store={store}>
-            <StyleContext.Provider value={{ insertCss }}><Home /></StyleContext.Provider>
-            </Provider>
-        );
-    const html = `<!doctype html>
-		<html>
-			<head>
-			<title>369纽约活动网</title>
-			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-			<meta name="viewport" content="width=device-width, initial-scale=1">
-			<style>body{margin:85px 0 0;padding:0;font-family:Georgia,"Times New Roman","Microsoft YaHei New", "Microsoft Yahei","微软雅黑",宋体,SimSun,STXihei,"华文细黑",sans-serif;line-height:28px;font-size:16px;color:#676767;}${[...css].join('').replace(/\n|\t/g,'')}</style>
-			</head>
-			<body>
-			<div id="root">${body}</div>
-            <script>window.REDUX_DATA = ${ JSON.stringify( reduxState ) }</script>
-            <script src="./dist/home.js"></script>
-			</body>
-		</html>`;
-    res.status(200).send(html);
+    fetchPosts().then(postAction => {
+    	store.dispatch(postAction);
+        //Pass Redux states to Frontend:
+        const reduxState = store.getState();
+        //Render HTML:
+        const body = renderToString(
+                <Provider store={store}>
+                <StyleContext.Provider value={{ insertCss }}><Home /></StyleContext.Provider>
+                </Provider>
+            );
+        const html = `<!doctype html>
+    		<html>
+    			<head>
+    			<title>369纽约活动网</title>
+    			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    			<meta name="viewport" content="width=device-width, initial-scale=1">
+    			<style>body{margin:85px 0 0;padding:0;font-family:Georgia,"Times New Roman","Microsoft YaHei New", "Microsoft Yahei","微软雅黑",宋体,SimSun,STXihei,"华文细黑",sans-serif;line-height:28px;font-size:16px;color:#676767;}${[...css].join('').replace(/\n|\t/g,'')}</style>
+    			</head>
+    			<body>
+    			<div id="root">${body}</div>
+                <script>window.REDUX_DATA = ${ JSON.stringify( reduxState ) }</script>
+                <script src="./dist/home.js"></script>
+    			</body>
+    		</html>`;
+        res.status(200).send(html);
+    });
 })
 
 // Certificate with www:
