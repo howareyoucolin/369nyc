@@ -18,6 +18,21 @@ import Home from 'src/templates/home/home';
 
 const app = express();
 
+//http to https, nonwww to www redirections:
+app.use(function (req, res, next) {
+    if (req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.') {
+        next();
+    } else {
+        res.redirect(301, 'https://www.369nyc.com' + req.url);
+        return;
+    }
+})
+
+// Static folders and files: 
+app.use('/public', express.static(path.join(__dirname, '/var/369nyc/public')));
+app.use('/dist', express.static(path.join(__dirname, '/var/369nyc/dist')));
+app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-known')));
+
 /*** Application layer configurations ***/
 
 // Home page:
@@ -51,21 +66,6 @@ app.get('/', function (req, res) {
 })
 
 /*** Server layer configurations ***/
-
-// Static folders and files: 
-app.use('/public', express.static(path.join(__dirname, '/var/369nyc/public')));
-app.use('/dist', express.static(path.join(__dirname, '/var/369nyc/dist')));
-app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-known')));
-
-//http to https, nonwww to www redirections:
-app.use(function (req, res, next) {
-    if (req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.') {
-        next();
-    } else {
-        res.redirect(301, 'https://www.369nyc.com' + req.url);
-        return;
-    }
-})
 
 // Certificate with www:
 const privateKey_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/privkey.pem', 'utf8');
