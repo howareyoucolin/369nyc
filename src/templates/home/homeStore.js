@@ -1,7 +1,7 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import postReducer from "src/store/postData/reducer";
-import { fetchPosts } from "src/store/postData/actions";
+import { fetchPosts, fetchTen } from "src/store/postData/actions";
 
 //Redux store:
 let store = null;
@@ -18,3 +18,15 @@ else{
 }
 
 export default store;
+
+export async function initHomeStoreData() {
+	const actionList = [
+		fetchPosts(),
+		fetchTen()
+	];
+	await Promise.all(actionList).then(values => {
+		values.forEach( value => {
+			store.dispatch(value);
+		});
+	});
+}

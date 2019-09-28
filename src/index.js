@@ -12,8 +12,7 @@ import { renderToString } from "react-dom/server";
 import { CombinedProvider, css } from 'src/includes/combinedProvider';
 import { commonCss } from 'src/includes/commonCss';
 
-import { fetchPosts, fetchTen } from "src/store/postData/actions";
-import HomeStore from 'src/templates/home/homeStore';
+import HomeStore, { initHomeStoreData } from 'src/templates/home/homeStore';
 import Home from 'src/templates/home/home';
 
 const app = express();
@@ -38,9 +37,7 @@ app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-kn
 // Home page:
 app.get('/', function (req, res) {
 	//Fetch Data:
-    Promise.all([fetchPosts(), fetchTen()]).then(values => {
-    	HomeStore.dispatch(values[0]);
-        HomeStore.dispatch(values[1]);
+    initHomeStoreData().then( () => {
         //Render HTML:
         const body = renderToString(
                 <CombinedProvider store={HomeStore}>
