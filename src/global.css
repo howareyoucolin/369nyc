@@ -1,7 +1,10 @@
 .container{
-	max-width:860px;
+	max-width:1140px;
 	margin:0 auto;
 	padding:0 15px;
+}
+.leftColumn{
+	width:60%;
 }
 .justify{
 	text-align:justify;

@@ -14,7 +14,9 @@ class Home extends React.Component {
 			<div>
 				<Header />
 				<div className={cx(gs.container,s.events)}>
-					<Events />
+					<div className={gs.leftColumn}>
+						<Events />
+					</div>
 				</div>
 			</div>
 		)

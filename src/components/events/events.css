@@ -1,0 +1,11 @@
+.events{
+	background:#fff;
+	padding:0;
+	margin:0;
+}
+.event{
+	list-style:none;
+	padding:15px;
+	margin:0;
+	border-bottom:1px solid #efefef;
+}

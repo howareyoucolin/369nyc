@@ -8,5 +8,28 @@ body{
 		"华文细黑",sans-serif;
 	line-height:28px;
 	font-size:16px;
-	color:#676767;
-}`.replace(/\n|\t/g,'');//Remove tabs and linebreaks.
+	background:#f5f5f5;
+	color:#333;
+}
+p{
+	margin:0 0 10px;
+}
+h3{
+	padding:0;
+	margin:0 0 10px;
+	color:#000;
+	font-size:18px;
+	font-weight:800;
+}
+a{
+	text-decoration:none;
+	color:inherit;
+}
+a:hover{
+	color:#f60;
+}
+ul{
+	margin:0;
+	padding:0;
+}
+`.replace(/\n|\t/g,'');//Remove tabs and linebreaks.
