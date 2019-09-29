@@ -1,12 +1,12 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import postReducer from "src/store/postData/reducer";
-import { fetchPosts } from "src/store/postData/actions";
+import eventReducer from "src/store/eventData/reducer";
+import { fetchEvents } from "src/store/eventData/actions";
 
 //Redux store:
 let store = null;
 const combinedReducer = combineReducers({
-    postData: postReducer
+    eventData: eventReducer
 });
 
 //Init store for SSR or CSR:
@@ -21,7 +21,7 @@ export default store;
 
 export async function initHomeStoreData() {
 	const actionList = [
-		fetchPosts()
+		fetchEvents()
 	];
 	await Promise.all(actionList).then(values => {
 		values.forEach( value => {

@@ -11,16 +11,16 @@ class Events extends React.Component {
 	}
 	
 	render() {
-		const { posts, counter } = this.props;
-		const postList = posts.map( (post,index) => 
+		const { events } = this.props;
+		const eventList = events.map( (event,index) => 
 				<li key={index}>
-					<p>{post.post_title}</p>
-					<p>{post.post_content}</p>
+					<p>{event.post_title}</p>
+					<p>{event.post_content}</p>
 				</li>
 			);
 		return (
 			<div>
-				<ul>{postList}</ul>
+				<ul>{eventList}</ul>
 			</div>
 		)
 	}
@@ -28,7 +28,7 @@ class Events extends React.Component {
 
 const mapStateToProps = (state) => {
 	return { 
-		posts: state.postData.posts,
+		events: state.eventData.events,
 	};
 };
 
