@@ -12,3 +12,8 @@
 	width:100%;
 	max-width:280px;
 }
+@media only screen and (max-width: 600px) {
+	.sidebar{
+		border:0;
+	}	
+}

@@ -5,7 +5,7 @@ import cx from 'classnames';
 import gs from 'src/global.css';
 import s from './home.css';
 import Header from 'src/components/header/header';
-import Events from 'src/components/events/events';
+import Members from 'src/components/members/members';
 import Sidebar from 'src/components/sidebar/sidebar';
 
 class Home extends React.Component {
@@ -14,9 +14,9 @@ class Home extends React.Component {
 		return (
 			<div>
 				<Header />
-				<div className={cx(gs.container,s.events)}>
+				<div className={cx(gs.container,s.members)}>
 					<div className={gs.leftColumn}>
-						<Events />
+						<Members />
 					</div>
 					<div className={gs.rightColumn}>
 						<Sidebar />

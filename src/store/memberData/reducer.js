@@ -4,7 +4,7 @@ const memberInitialState = {
 	members: []
 };
 
-function memberReducer(state = memberInitialState, action) {
+function eventReducer(state = memberInitialState, action) {
 	if(action.type == FETCH_MEMBERS){
 		return {
 			...state,
@@ -14,4 +14,4 @@ function memberReducer(state = memberInitialState, action) {
 	return state;
 };
 
-export default memberReducer;
+export default eventReducer;
