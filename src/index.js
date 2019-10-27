@@ -47,7 +47,7 @@ app.get('/', function (req, res) {
         const html = `<!doctype html>
     		<html>
     			<head>
-    			<title>369纽约活动网</title>
+    			<title>369纽约活动交友网</title>
     			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     			<meta name="viewport" content="width=device-width, initial-scale=1">
     			<style>${commonCss+[...css].join('').replace(/\n|\t/g,'')}</style>

@@ -9,7 +9,7 @@ class Header extends React.Component {
 		return (
 			<div className={s.header}>
 				<div className={gs.container}>
-					<h1 className={s.title}>369纽约活动网</h1>
+					<h1 className={s.title}>369纽约活动交友网</h1>
 				</div>
 			</div>
 		)

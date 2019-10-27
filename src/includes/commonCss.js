@@ -8,8 +8,8 @@ body{
 		"华文细黑",sans-serif;
 	line-height:28px;
 	font-size:16px;
-	background:#f5f5f5;
-	color:#333;
+	background:#FAFAFA;
+	color:#4a4a4a;
 }
 p{
 	margin:0 0 10px;

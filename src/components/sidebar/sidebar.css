@@ -1,0 +1,14 @@
+.sidebar{
+	box-sizing: border-box;
+	background:#FFF;
+	padding:15px;
+	border:1px solid #DDD;
+	width:100%;
+}
+.register{
+	text-align:center;
+}
+.qrcode{
+	width:100%;
+	max-width:280px;
+}
