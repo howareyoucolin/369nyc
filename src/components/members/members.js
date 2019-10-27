@@ -16,8 +16,8 @@ class Members extends React.Component {
 		
 		const memberList = members.map( (member,index) => 
 				<li className={s.member} key={member.id}>
-					<div>
-						<img className={s.profile} src={member.profile} />
+					<div className={s.profileHolder}>
+						<img className={s.profileImage} src={member.profile} />
 					</div>
 					<div className={s.detail}>
 						<div>

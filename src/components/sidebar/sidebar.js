@@ -15,7 +15,7 @@ class Sidebar extends React.Component {
 					</p>
 					<img className={s.qrcode} src="https://www.369usa.com/images/qrcode-old.png" />
 					<p>
-						微信号: wechat123456
+						微信号: colin6478828
 					</p>
 				</div>
 			</div>
