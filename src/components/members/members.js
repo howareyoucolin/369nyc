@@ -25,7 +25,7 @@ class Members extends React.Component {
 							<span className={s.male}>&#9794;</span>
 						</div>
 						<p className={s.subtitle}>法拉盛, 纽约</p>
-						{member.wechat !== null &&
+						{member.wechat != false &&
 							<p>微信号: {member.wechat}</p>
 						}
 						<p>{member.content}</p>
