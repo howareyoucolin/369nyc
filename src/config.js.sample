@@ -1,0 +1,9 @@
+const config = {
+
+        env : 'dev', // either 'prod' or 'dev'
+        root_dir : '/var/369nyc/',
+        port: 3000 // any integer from 1 - 65355
+
+};
+
+export default config;
