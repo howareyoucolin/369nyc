@@ -58,5 +58,4 @@ app.get('/', function (req, res) {
 })
 
 //Start http and https server
-server.loadHttpServer();
-server.loadHttpsServer();
+server.loadHttpServer().loadHttpsServer();

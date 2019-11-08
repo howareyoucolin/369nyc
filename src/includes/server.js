@@ -18,14 +18,14 @@ const Server = function(app){
 	this.setServerRedirect = function(){
 		
 		//Only the prod site makes such redirects.
-		if(config.env !== 'prod') return;
+		if(config.env !== 'prod') return this;
 		
 		this.app.use(function (req, res, next) {
 			if (req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.') {
 				next();
 			} else {
 				res.redirect(301, 'https://www.369nyc.com' + req.url);
-				return;
+				return this;
 			}
 		})
 		
@@ -42,6 +42,8 @@ const Server = function(app){
 			console.log('HTTP Server running on port ' + config.port);
 		});
 		
+		return this;
+
 	}
 	
 	/**
@@ -50,7 +52,7 @@ const Server = function(app){
 	this.loadHttpsServer = function(){
 		
 		//Only the prod site runs SSL.
-		if(config.env !== 'prod') return;
+		if(config.env !== 'prod') return this;
 		
 		// Certificate with www:
 		const privateKey_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/privkey.pem', 'utf8');
@@ -88,6 +90,8 @@ const Server = function(app){
 		httpsServer.listen(443, () => {
 			console.log('HTTPS Server running on port 443');
 		});
+
+		return this;
 		
 	}
 	
