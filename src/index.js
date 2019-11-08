@@ -1,3 +1,5 @@
+import CONFIG from './config.js';
+
 import http from 'http';
 import https from 'https';
 import tls from 'tls';
@@ -17,20 +19,26 @@ import Home from 'src/templates/home/home';
 
 const app = express();
 
-//http to https, nonwww to www redirections:
-app.use(function (req, res, next) {
-    if (req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.') {
-        next();
-    } else {
-        res.redirect(301, 'https://www.369nyc.com' + req.url);
-        return;
-    }
-})
+
+//Only the prod site does https redirections.
+if(CONFIG.ENV === 'PROD'){
+	
+	//http to https, nonwww to www redirections:
+	app.use(function (req, res, next) {
+		if (req.protocol === 'https' && req.headers.host.slice(0, 4) === 'www.') {
+			next();
+		} else {
+			res.redirect(301, 'https://www.369nyc.com' + req.url);
+			return;
+		}
+	})
+	
+}
 
 // Static folders and files: 
-app.use('/public', express.static(path.join(__dirname, '/var/369nyc/public')));
-app.use('/dist', express.static(path.join(__dirname, '/var/369nyc/dist')));
-app.use('/.well-known', express.static(path.join(__dirname, '/var/369nyc/well-known')));
+app.use('/public', express.static(path.join(__dirname, CONFIG.ROOT_DIR + 'public')));
+app.use('/dist', express.static(path.join(__dirname, CONFIG.ROOT_DIR + 'dist')));
+app.use('/.well-known', express.static(path.join(__dirname, CONFIG.ROOT_DIR + 'well-known')));
 
 /*** Application layer configurations ***/
 
@@ -66,44 +74,51 @@ app.get('/', function (req, res) {
 
 /*** Server layer configurations ***/
 
-// Certificate with www:
-const privateKey_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/privkey.pem', 'utf8');
-const certificate_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/cert.pem', 'utf8');
-const ca_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/chain.pem', 'utf8');
+//Only the prod site runs SSL
+if(CONFIG.ENV === 'PROD'){
+	
+	// Certificate with www:
+	const privateKey_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/privkey.pem', 'utf8');
+	const certificate_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/cert.pem', 'utf8');
+	const ca_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/chain.pem', 'utf8');
 
-// Certificate without www:
-const privateKey_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/privkey.pem', 'utf8');
-const certificate_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/cert.pem', 'utf8');
-const ca_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/chain.pem', 'utf8');
+	// Certificate without www:
+	const privateKey_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/privkey.pem', 'utf8');
+	const certificate_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/cert.pem', 'utf8');
+	const ca_nonwww = fs.readFileSync('/etc/letsencrypt/live/369nyc.com/chain.pem', 'utf8');
 
-// Conditionally load certifate:
-const credentials = {
-    SNICallback: function (domain, cb) {
-        if (domain === 'www.369nyc.com') {
-            return cb(null, tls.createSecureContext({
-                key: privateKey_www,
-                cert: certificate_www,
-                ca: ca_www
-            }));
-        }
-        else if (domain === '369nyc.com') {
-            return cb(null, tls.createSecureContext({
-                key: privateKey_nonwww,
-                cert: certificate_nonwww,
-                ca: ca_nonwww
-            }));
-        }
-    },
-};
+	// Conditionally load certifate:
+	const credentials = {
+		SNICallback: function (domain, cb) {
+			if (domain === 'www.369nyc.com') {
+				return cb(null, tls.createSecureContext({
+					key: privateKey_www,
+					cert: certificate_www,
+					ca: ca_www
+				}));
+			}
+			else if (domain === '369nyc.com') {
+				return cb(null, tls.createSecureContext({
+					key: privateKey_nonwww,
+					cert: certificate_nonwww,
+					ca: ca_nonwww
+				}));
+			}
+		},
+	};
 
-// Starting both http & https servers
+	// Starting https server
+	const httpsServer = https.createServer(credentials, app);
+
+	httpsServer.listen(443, () => {
+		console.log('HTTPS Server running on port 443');
+	});
+
+}
+
+// Starting http server
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
 
-httpServer.listen(80, () => {
-    console.log('HTTP Server running on port 80');
-});
-
-httpsServer.listen(443, () => {
-    console.log('HTTPS Server running on port 443');
+httpServer.listen(CONFIG.PORT, () => {
+    console.log('HTTP Server running on port ' + CONFIG.PORT);
 });
