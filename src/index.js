@@ -21,9 +21,9 @@ const server = new Server(app);
 server.setServerRedirect();
 
 // Static folders and files: 
-app.use('/public', express.static(path.join(__dirname, config.root_dir + 'public')));
-app.use('/dist', express.static(path.join(__dirname, config.root_dir + 'dist')));
-app.use('/.well-known', express.static(path.join(__dirname, config.root_dir + 'well-known')));
+app.use('/public', express.static(path.resolve('./') + '/public'));
+app.use('/dist', express.static(path.resolve('./') + '/dist'));
+app.use('/.well-known', express.static(path.resolve('./') + '/well-known'));
 
 /*** Application layer configurations ***/
 
