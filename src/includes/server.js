@@ -54,6 +54,10 @@ const Server = function(app){
 		//Only the prod site runs SSL.
 		if(config.env !== 'prod') return this;
 		
+		/*** NOTE ***/
+		// How to obtain a ssl certificate?
+		// https://itnext.io/node-express-letsencrypt-generate-a-free-ssl-certificate-and-run-an-https-server-in-5-minutes-a730fbe528ca
+
 		// Certificate with www:
 		const privateKey_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/privkey.pem', 'utf8');
 		const certificate_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/cert.pem', 'utf8');
