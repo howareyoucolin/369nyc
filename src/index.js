@@ -1,4 +1,4 @@
-import CONFIG from './config.js';
+import config from './config.js';
 
 import http from 'http';
 import https from 'https';
@@ -21,7 +21,7 @@ const app = express();
 
 
 //Only the prod site does https redirections.
-if(CONFIG.ENV === 'PROD'){
+if(config.env === 'prod'){
 	
 	//http to https, nonwww to www redirections:
 	app.use(function (req, res, next) {
@@ -36,9 +36,9 @@ if(CONFIG.ENV === 'PROD'){
 }
 
 // Static folders and files: 
-app.use('/public', express.static(path.join(__dirname, CONFIG.ROOT_DIR + 'public')));
-app.use('/dist', express.static(path.join(__dirname, CONFIG.ROOT_DIR + 'dist')));
-app.use('/.well-known', express.static(path.join(__dirname, CONFIG.ROOT_DIR + 'well-known')));
+app.use('/public', express.static(path.join(__dirname, config.root_dir + 'public')));
+app.use('/dist', express.static(path.join(__dirname, config.root_dir + 'dist')));
+app.use('/.well-known', express.static(path.join(__dirname, config.root_dir + 'well-known')));
 
 /*** Application layer configurations ***/
 
@@ -75,7 +75,7 @@ app.get('/', function (req, res) {
 /*** Server layer configurations ***/
 
 //Only the prod site runs SSL
-if(CONFIG.ENV === 'PROD'){
+if(config.env === 'prod'){
 	
 	// Certificate with www:
 	const privateKey_www = fs.readFileSync('/etc/letsencrypt/live/www.369nyc.com/privkey.pem', 'utf8');
@@ -119,6 +119,6 @@ if(CONFIG.ENV === 'PROD'){
 // Starting http server
 const httpServer = http.createServer(app);
 
-httpServer.listen(CONFIG.PORT, () => {
-    console.log('HTTP Server running on port ' + CONFIG.PORT);
+httpServer.listen(config.port, () => {
+    console.log('HTTP Server running on port ' + config.port);
 });
