@@ -1,5 +1,6 @@
 import path from 'path';
 import express from 'express';
+import axios from 'axios';
 
 import config from 'src/config.js';
 import Server from 'src/includes/server.js';
@@ -37,23 +38,27 @@ app.get('/', function (req, res) {
                     <Home />
                 </CombinedProvider>
             );
-        const html = `<!doctype html>
-    		<html>
-    			<head>
-    			<title>369纽约交友网</title>
-				<meta name="description" content="369纽约交友网帮助纽约年轻男女提供婚介,普通交朋友,找男朋友,找女朋友,谈恋爱的平台,主要针对纽约市,法拉盛,曼哈顿和布碌伦等地区,提倡健康交友,不允许不良的行为...">
-				<meta name="keywords" content="纽约婚介,纽约交友,纽约交朋友,纽约找男朋友,法拉盛交友">
-    			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    			<meta name="viewport" content="width=device-width, initial-scale=1">
-    			<style>${commonCss+[...css].join('').replace(/\n|\t/g,'')}</style>
-    			</head>
-    			<body>
-    			<div id="root">${body}</div>
-                <script>window.REDUX_DATA = ${JSON.stringify(HomeStore.getState())}</script>
-                <script src="./dist/home.js"></script>
-    			</body>
-    		</html>`;
-        res.status(200).send(html);
+		axios.get('http://api.369usa.com/page-meta/home').then( (response) => {
+			const meta = response.data;
+			const html = `<!doctype html>
+				<html>
+					<head>
+					<title>369纽约交友网</title>
+					<meta name="${meta.title}" content="${meta.description}">
+					<meta name="keywords" content="${meta.keywords}">
+					<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+					<meta name="viewport" content="width=device-width, initial-scale=1">
+					<style>${commonCss+[...css].join('').replace(/\n|\t/g,'')}</style>
+					</head>
+					<body>
+					<div id="root">${body}</div>
+					<script>window.REDUX_DATA = ${JSON.stringify(HomeStore.getState())}</script>
+					<script src="./dist/home.js"></script>
+					</body>
+				</html>`;
+			res.status(200).send(html);
+		} );
+        
     });
 })
 
