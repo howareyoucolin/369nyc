@@ -43,8 +43,8 @@ app.get('/', function (req, res) {
 			const html = `<!doctype html>
 				<html>
 					<head>
-					<title>369纽约交友网</title>
-					<meta name="${meta.title}" content="${meta.description}">
+					<title>${meta.title}</title>
+					<meta name="description" content="${meta.description}">
 					<meta name="keywords" content="${meta.keywords}">
 					<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 					<meta name="viewport" content="width=device-width, initial-scale=1">
