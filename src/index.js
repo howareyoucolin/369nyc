@@ -38,7 +38,7 @@ app.get('/', function (req, res) {
                     <Home />
                 </CombinedProvider>
             );
-		axios.get('http://api.369usa.com/page-meta/home').then( (response) => {
+		axios.get('https://api.369usa.com/page-meta/home').then( (response) => {
 			const meta = response.data;
 			const html = `<!doctype html>
 				<html>
