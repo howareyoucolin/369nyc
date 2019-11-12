@@ -1,4 +1,6 @@
 import createHomePage from 'src/routes/home';
+import createPostArchivePage from 'src/routes/posts';
+import createPostSinglePage from 'src/routes/post';
 
 /**
 * A class that deals with routing.
@@ -17,6 +19,15 @@ export default function Router(app){
 			case '/': 
 				createHomePage(app,route); 
 				break;
+
+			case '/posts': 
+				createPostArchivePage(app,route); 
+				break;
+				
+			case '/post': 
+				createPostSinglePage(app,route); 
+				break;
+				
 				
 			default: 
 				//404 Page 

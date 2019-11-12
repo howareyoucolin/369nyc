@@ -22,5 +22,9 @@ app.use('/.well-known', express.static(path.resolve('./') + '/well-known'));
 //Home page:
 router.createPage('/');
 
+//Posts archive page and single page:
+router.createPage('/posts');
+router.createPage('/post');
+
 //Start http and https server
 server.loadHttpServer().loadHttpsServer();
