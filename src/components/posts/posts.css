@@ -1,0 +1,34 @@
+.members{
+	padding:0;
+	margin:0;
+}
+.member{
+	list-style:none;
+	padding:0;
+	margin:0 0 45px 0;
+	display: flex;
+}
+.profileHolder{
+	width:150px;
+}
+.profileImage{
+	display: block;
+	width:150px;
+}
+.detail{
+	box-sizing: border-box;
+	padding:0 15px;
+}
+.subtitle{
+	color:#7e7e7e;
+	font-size:90%;
+	line-height:15px;
+}
+.male{
+	color:#0095FF;
+}
+@media only screen and (max-width: 600px) {
+	.profile{
+		width:100px;
+	}	
+}

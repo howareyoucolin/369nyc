@@ -1,8 +1,7 @@
 import { FETCH_POSTS } from '../actionType';
 
 const postInitialState = {
-	posts: [],
-	counter: 0
+	posts: []
 };
 
 function postReducer(state = postInitialState, action) {

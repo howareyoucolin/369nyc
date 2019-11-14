@@ -8,7 +8,7 @@ import { renderToString } from "react-dom/server";
 import { CombinedProvider, css } from 'src/includes/combinedProvider';
 import { commonCss } from 'src/includes/commonCss';
 
-import PostStore, { initPostStoreData } from 'src/templates/posts/postsStore';
+import PostStore, { initPostsStoreData } from 'src/templates/posts/postsStore';
 import Posts from 'src/templates/posts/posts';
 
 export default function(app,route){
@@ -16,8 +16,8 @@ export default function(app,route){
 	app.get(route, function (req, res) {
 
 		//Fetch Data:
-	    Promise.resolve().then( () => {
-			
+	    initPostsStoreData().then( () => {
+		
 			//Render HTML:
 			const body = renderToString(
 					<CombinedProvider store={PostStore}>

@@ -4,6 +4,7 @@ import withStyles from 'isomorphic-style-loader/withStyles';
 import cx from 'classnames';
 import gs from 'src/global.css';
 import s from './posts.css';
+import PostsList from 'src/components/posts/posts';
 import Header from 'src/components/header/header';
 import Sidebar from 'src/components/sidebar/sidebar';
 
@@ -15,13 +16,9 @@ class Posts extends React.Component {
 				<Header />
 				<div className={cx(gs.container,s.members)}>
 					<div className={gs.leftColumn}>
-						THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST 
-						THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST
-						THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST
-						THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST
-						THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST
-						THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST
-						THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST THIS IS TEST
+
+						<PostsList />
+
 					</div>
 					<div className={gs.rightColumn}>
 						<Sidebar />

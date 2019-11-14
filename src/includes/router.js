@@ -15,11 +15,11 @@ export default function Router(app){
 	this.createPages = function(){
 
 		//Home page:
-		createHomePage(app,'/'); 
+		createHomePage(app, '/'); 
 		
 		//Posts archive page and single page:
-		createPostArchivePage(app,'/blog'); 
-		createPostSinglePage(app,'post'); 
+		createPostArchivePage(app, '/blog'); 
+		//createPostSinglePage(app, 'post'); 
 		
 		//404 page
 		//TODO
