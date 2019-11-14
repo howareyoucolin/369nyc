@@ -17,13 +17,13 @@ app.use('/public', express.static(path.resolve('./') + '/public'));
 app.use('/dist', express.static(path.resolve('./') + '/dist'));
 app.use('/.well-known', express.static(path.resolve('./') + '/well-known'));
 
-//Pages
+/*** Pages ***/
 
 //Home page:
 router.createPage('/');
 
 //Posts archive page and single page:
-router.createPage('/posts');
+router.createPage('/blog');
 router.createPage('/post');
 
 //Start http and https server

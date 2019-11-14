@@ -20,7 +20,7 @@ export default function Router(app){
 				createHomePage(app,route); 
 				break;
 
-			case '/posts': 
+			case '/blog': 
 				createPostArchivePage(app,route); 
 				break;
 				
