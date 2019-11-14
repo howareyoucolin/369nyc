@@ -17,14 +17,8 @@ app.use('/public', express.static(path.resolve('./') + '/public'));
 app.use('/dist', express.static(path.resolve('./') + '/dist'));
 app.use('/.well-known', express.static(path.resolve('./') + '/well-known'));
 
-/*** Pages ***/
-
-//Home page:
-router.createPage('/');
-
-//Posts archive page and single page:
-router.createPage('/blog');
-router.createPage('/post');
+//Route pages
+router.createPages();
 
 //Start http and https server
 server.loadHttpServer().loadHttpsServer();

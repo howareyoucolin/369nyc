@@ -12,28 +12,17 @@ export default function Router(app){
 	/**
 	* Renders page according to the route.
 	*/
-	this.createPage = function(route){
+	this.createPages = function(){
 
-		switch(route){
-
-			case '/': 
-				createHomePage(app,route); 
-				break;
-
-			case '/blog': 
-				createPostArchivePage(app,route); 
-				break;
-				
-			case '/post': 
-				createPostSinglePage(app,route); 
-				break;
-				
-				
-			default: 
-				//404 Page 
-				break;
-
-		}
+		//Home page:
+		createHomePage(app,'/'); 
+		
+		//Posts archive page and single page:
+		createPostArchivePage(app,'/blog'); 
+		createPostSinglePage(app,'post'); 
+		
+		//404 page
+		//TODO
 
 	}
 	
