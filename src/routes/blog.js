@@ -8,20 +8,20 @@ import { renderToString } from "react-dom/server";
 import { CombinedProvider, css } from 'src/includes/combinedProvider';
 import { commonCss } from 'src/includes/commonCss';
 
-import PostStore, { initPostsStoreData } from 'src/templates/posts/postsStore';
-import Posts from 'src/templates/posts/posts';
+import BlogStore, { initBlogStoreData } from 'src/templates/blog/blogStore';
+import Blog from 'src/templates/blog/blog';
 
 export default function(app,route){
 
 	app.get(route, function (req, res) {
 
 		//Fetch Data:
-	    initPostsStoreData().then( () => {
+	    initBlogStoreData().then( () => {
 		
 			//Render HTML:
 			const body = renderToString(
-					<CombinedProvider store={PostStore}>
-						<Posts />
+					<CombinedProvider store={BlogStore}>
+						<Blog />
 					</CombinedProvider>
 				);
 
@@ -39,7 +39,8 @@ export default function(app,route){
 						</head>
 						<body>
 						<div id="root">${body}</div>
-						<script>window.REDUX_DATA = ${JSON.stringify(PostStore.getState())}</script>
+						<script>window.REDUX_DATA = ${JSON.stringify(BlogStore.getState())}</script>
+						<script src="./dist/blog.js"></script>
 						</body>
 					</html>`;
 				res.status(200).send(html);

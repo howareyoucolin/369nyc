@@ -19,7 +19,7 @@ else{
 
 export default store;
 
-export async function initPostsStoreData() {
+export async function initBlogStoreData() {
 	const actionList = [
 		fetchPosts()
 	];

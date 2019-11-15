@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Home from 'src/templates/home/home';
+import Blog from 'src/templates/blog/blog';
 import { CombinedProvider } from 'src/includes/combinedProvider';
-import HomeStore from 'src/templates/home/homeStore';
+import BlogStore from 'src/templates/blog/blogStore';
 
 ReactDOM.hydrate(
-	<CombinedProvider store={HomeStore}>
-		<Home />
+	<CombinedProvider store={BlogStore}>
+		<Blog />
 	</CombinedProvider>,
 	document.getElementById('root')
 )

@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import withStyles from 'isomorphic-style-loader/withStyles';
 import cx from 'classnames';
 import gs from 'src/global.css';
-import s from './posts.css';
-import PostsList from 'src/components/posts/posts';
+import s from './blog.css';
+import Posts from 'src/components/posts/posts';
 import Header from 'src/components/header/header';
 import Sidebar from 'src/components/sidebar/sidebar';
 
-class Posts extends React.Component {
+class Blog extends React.Component {
 
 	render() {
 		return (
@@ -17,7 +17,7 @@ class Posts extends React.Component {
 				<div className={cx(gs.container,s.members)}>
 					<div className={gs.leftColumn}>
 
-						<PostsList />
+						<Posts />
 
 					</div>
 					<div className={gs.rightColumn}>
@@ -29,4 +29,4 @@ class Posts extends React.Component {
 	}
 }
 
-export default withStyles(gs,s)(Posts);
+export default withStyles(gs,s)(Blog);
